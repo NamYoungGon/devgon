@@ -1,3 +1,3 @@
 import axios from 'axios'
 
-const login = (email, password) => axios.post('/api/')
+export const login = (email, password) => axios.post('/api/user/login')
