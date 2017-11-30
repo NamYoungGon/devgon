@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import * as auth from '../actions/auth';
+import * as actions from '../store/auth';
 import { connect } from 'react-redux';
 
 import Authentication from './../components/Authentication';
@@ -11,7 +11,7 @@ class App extends Component {
     }
 
     handleLogin = (email, password) => {
-        this.props.login(email, password)
+        this.props.authenticate(email, password)
     }
 
     render() {
@@ -32,9 +32,9 @@ export default connect(
 // store 안의 state 값을 props 로 연결해줍니다.
     (state) => {
         return {
-            email: state.email,
-            password: state.password,
-            authentication: state.authentication
+            email: state.getIn(['form', 'email']),
+            password: state.getIn(['form', 'password']),
+            authentication: state.get('authentication')
         };
     },
 /* 
@@ -43,8 +43,8 @@ export default connect(
 */
     (dispatch) => {
         return {
-            login: (email, password) => {
-                dispatch(auth.login(email, password))
+            authenticate: (email, password) => {
+                dispatch(actions.authenticate({ email, password }));
             }
         };
     }
