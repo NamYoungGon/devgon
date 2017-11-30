@@ -2,9 +2,9 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 
-const config = require('./config')
-const database_loader = require('./db/loader')
-const route_loader = require('./routes/loader')
+const config = require('./src/config')
+const database_loader = require('./src/db/loader')
+const route_loader = require('./src/routes/loader')
 
 const app = express()
 app.set('port', process.env.PORT || config.port)

@@ -14,14 +14,20 @@ const config = {
     route: [
         {
             file: './user', 
-            path: '/process/add', 
-            method: 'addUser',
+            path: '/api/user/add', 
+            method: 'u_add',
             type: 'post'
         },
         {
             file: './user', 
-            path: '/process/login', 
-            method: 'login',
+            path: '/api/user/login', 
+            method: 'u_login',
+            type: 'post'
+        },
+        {
+            file: './user', 
+            path: '/api/user/list', 
+            method: 'u_list',
             type: 'post'
         }
     ]
