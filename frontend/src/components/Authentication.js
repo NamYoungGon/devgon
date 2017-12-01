@@ -11,30 +11,29 @@ class Authentication extends Component {
         }
     }
 
-    handleChangeEmail = e => {
+    handleChange = e => {
         this.setState({
-            email: e.target.value
-        })
-    }
-
-    handleChangePassword = e => {
-        this.setState({
-            password: e.target.value
+            [e.target.name]: e.target.value
         })
     }
 
     handleClickLogin = () => {
-        this.props.onLogin(this.state.email, this.state.password)
+        this.props.onLogin(this.state.email, this.state.password).then(
+            (res) => {
+                console.log(res)
+            }
+        )
+      
     }
 
     render() {
         const authentication = this.props.authentication === true ? '로그인 성공' : (
             <div>
                 <div>
-                    email : <input type="text" onChange={this.handleChangeEmail} />
+                    email : <input type="text" name="email" onChange={this.handleChange} />
                 </div>
                 <div>
-                    password : <input type="text" onChange={this.handleChangePassword}/>
+                    password : <input type="text" name="password" onChange={this.handleChange}/>
                 </div>
                 <button onClick={this.handleClickLogin}>로그인</button>
             </div>

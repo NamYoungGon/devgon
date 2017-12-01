@@ -1,40 +1,22 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 
-import * as auth from '../actions/auth';
 import { connect } from 'react-redux';
 
-import Authentication from './../components/Authentication';
-
 class App extends Component {
-    constructor(props) {
-        super(props)
-    }
-
-    handleLogin = (email, password) => {
-        this.props.login(email, password)
-    }
-
     render() {
         return (
             <div className="App">
-                <Authentication onLogin={this.handleLogin} authentication={this.props.authentication} />
-                <p>
-                    {this.props.email}
-                    {this.props.password}
-                    {this.props.authentication}
-                </p>
+                App
             </div>
         );
     }
 }
 
 export default connect(
-// store 안의 state 값을 props 로 연결해줍니다.
     (state) => {
         return {
-            email: state.auth.email,
-            password: state.auth.password,
-            authentication: state.auth.authentication
+            // isLoggedIn: state.auth.status.isLoggedIn
         };
     },
 /* 
@@ -43,9 +25,9 @@ export default connect(
 */
     (dispatch) => {
         return {
-            login: (email, password) => {
-                dispatch(auth.login(email, password))
-            }
+            // login: (email, password) => {
+            //     dispatch(auth.login(email, password))
+            // }
         };
     }
 )(App);
