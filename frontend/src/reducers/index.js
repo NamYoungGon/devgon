@@ -1,27 +1,26 @@
-import * as types from '../actions/ActionTypes';
+import auth from './auth'
 
-// 초기 상태를 정의합니다.
-const initialState = {
-    email: '',
-    password: '',
-    authentication: false
-}
+import { combineReducers } from 'redux';
 
-// 리듀서 함수를 정의합니다. 
-function user(state = initialState, action) {
-    // 레퍼런스 생성
-    switch(action.type) {
-        // 카운터를 새로 추가합니다
-        case types.AUTH_LOGIN:
-            return {
-                email: action.email,
-                password: action.password,
-                authentication: true
-            };
-
-        default:
-            return state;
+/*
+    서브 리듀서들을 하나로 합칩니다.
+    combineReducers 를 실행하고 나면, 나중에 store의 형태가 파라미터로 전달한 객체의 모양대로 만들어집니다.
+    지금의 경우:
+    {
+        numberData: {
+            number: 0
+        },
+        colorData: {
+            color: 'black'
+        }
     }
-};
+    로 만들어집니다.
+*/
 
-export default user
+
+
+const reducers = combineReducers({
+    auth
+});
+
+export default reducers;

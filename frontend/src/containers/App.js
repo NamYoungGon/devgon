@@ -32,14 +32,14 @@ export default connect(
 // store 안의 state 값을 props 로 연결해줍니다.
     (state) => {
         return {
-            email: state.email,
-            password: state.password,
-            authentication: state.authentication
+            email: state.auth.email,
+            password: state.auth.password,
+            authentication: state.auth.authentication
         };
     },
 /* 
     액션 생성자를 사용하여 액션을 생성하고,
-    해당 액션을 dispatch 하는 함수를 만들은 후, 이를 props 로 연결해줍니다.
+    해당 액션을 dispatch 하는 함수를 만든 후, 이를 props 로 연결해줍니다.
 */
     (dispatch) => {
         return {
