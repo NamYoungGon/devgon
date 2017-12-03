@@ -1,9 +1,9 @@
-const auth = require('./auth')
-const create = require('./create')
+const signin = require('./signin')
+const signup = require('./signup')
 const list = require('./list')
 
 module.exports = {
-    auth,
-    create,
+    signin,
+    signup,
     list
 }

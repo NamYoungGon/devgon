@@ -4,37 +4,72 @@ import axios from 'axios'
 
 export function login(email, password) {
     return (dispatch) => {
-        // const request = axios({
-        //     method: 'POST',
-        //     url: '/api/user/login',
-        //     data: {
-        //         email,
-        //         password
-        //     }
-        // })
-        // 
-        // return request.then(
-        //     response => dispatch(login_success(response)),
-        //     err => dispatch(login_fail(err))
-
         return axios.post('/api/user/login', { email, password })
-            .then((response) => {
-                dispatch(login_success(response))
+            .then((res) => {
+                dispatch(response(res))
+                if (res.data.data)
+                    dispatch(login_success(res.data.data.name))
             }).catch((err) => {
+                dispatch(response({
+                    data: {
+                        error: true,
+                        data: null,
+                        message: err
+                    }
+                }))
                 dispatch(login_fail(err))
             })
-        
     }
 }
 
-export function login_success() {
+export function login_success(name) {
     return {
-        type: types.AUTH_SUCCESS
+        type: types.AUTH_LOGIN_SUCCESS,
+        payload: name
     }
 }
 
 export function login_fail() {
     return {
-        type: types.AUTH_FAIL
+        type: types.AUTH_LOGIN_FAIL
+    }
+}
+
+export function register(email, password, name) {
+    return (dispatch) => {
+        return axios.post('/api/user/register', { email, password, name })
+            .then((res) => {
+                dispatch(response(res))
+                if (res.data.data)
+                    dispatch(register_success())
+            }).catch((err) => {
+                dispatch(response({
+                    data: {
+                        error: true,
+                        data: null,
+                        message: err
+                    }
+                }))
+                dispatch(register_fail(err))
+            })
+    }
+}
+
+export function register_success() {
+    return {
+        type: types.AUTH_REGISTER_SUCCESS
+    }
+}
+
+export function register_fail() {
+    return {
+        type: types.AUTH_REGISTER_FAIL
+    }
+}
+
+export function response({ data }) {
+    return {
+        type: types.AUTH_RESPONSE,
+        payload: data
     }
 }

@@ -8,15 +8,15 @@ loader.init = (app, config) => {
 
 function connect(app, config) {
     mongoose.Promise = global.Promise
-    mongoose.connect(config.db.url)
+    mongoose.connect(config.db.url, config.db.options)
     loader.db = mongoose.connection
 
     // 데이터베이스 연결 시 동작
     loader.db.on('open', () => {
         console.log(`데이터베이스에 연결됨 : ${config.db.url}`)
-        
-        createSchema(app, config)
     })
+
+    createSchema(app, config)
     
     loader.db.on('disconnected', () => {
         console.log('데이터베이스 연결 해제')
@@ -28,6 +28,7 @@ function connect(app, config) {
 function createSchema(app, config) {
     let curSchema
     let curModel
+    console.log("createSchema")
     config.db.schemas.forEach((data, index) => {
         curSchema = require(data.file).createSchema(mongoose)
         curModel = mongoose.model(data.collection, curSchema)

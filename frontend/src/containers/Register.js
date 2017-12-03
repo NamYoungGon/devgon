@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import * as auth from './../actions/auth'
 import { connect } from 'react-redux'
 
-import SignIn from './../components/SignIn'
+import SignUp from './../components/SignUp'
 
-class Login extends Component {
-    handleLogin = (email, password) => {
-        return this.props.login(email, password).then(
+class Register extends Component {
+    handleRegister = (email, password, name) => {
+        return this.props.register(email, password, name).then(
             (res) => {
                 return this.props.response
              }
@@ -18,21 +18,19 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <SignIn onLogin={this.handleLogin} authentication={this.props.isLoggedIn} name={this.props.name} />
+                <SignUp onRegister={this.handleRegister} authentication={this.props.isLoggedIn} />
             </div>
-        );
+        )
     }
 }
 
-Login.propTypes = {
-    isLoggedIn: PropTypes.bool,
-    name: PropTypes.string
+Register.propTypes = {
+    isLoggedIn: PropTypes.bool
 }
 
 export default connect(
     (state) => {
         return {
-            name: state.auth.status.name,
             isLoggedIn: state.auth.status.isLoggedIn,
             response: state.auth.response
         };
@@ -43,9 +41,9 @@ export default connect(
 */
     (dispatch) => {
         return {
-            login: (email, password) => {
-                return dispatch(auth.login(email, password))
+            register: (email, password, name) => {
+                return dispatch(auth.register(email, password, name))
             }
         }
     }
-)(Login)
+)(Register)

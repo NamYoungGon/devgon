@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Login from './containers/Login';
+import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
+import './styles/main.scss';
 
 // Redux 관련 불러오기
 import { Provider } from 'react-redux';
@@ -14,7 +14,7 @@ const store = configureStore()
 
 ReactDOM.render(
     <Provider store={store}>
-        <Login />
+        <App />
     </Provider>,
     document.getElementById('root')
 );

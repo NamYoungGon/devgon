@@ -14,8 +14,20 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 route_loader.init(app, express.Router())
 
-app.listen(app.get('port'), () => {
+const server = app.listen(app.get('port'), () => {
     console.log('Run server')
 
     database_loader.init(app, config)
+})
+
+
+
+const socketio = require('socket.io')
+const io = socketio.listen(server)
+
+io.sockets.on('connection', (socket) => {
+    socket.on('message', message => {
+        const { command,  }
+        // command -> 
+    })
 })

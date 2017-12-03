@@ -1,0 +1,10 @@
+@import 'lib/reset.css';
+@import 'lib/bootstrap.css';
+
+.nav-item + .nav-item {
+    margin-bottom: 20px;
+}
+
+.nav-sub {
+    padding-left: 30px;
+}

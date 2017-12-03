@@ -1,6 +1,6 @@
 const { getResJSON } = require('./../../lib/common')
 
-const auth = async (db, email, password, callback) => {
+const signin = async (db, email, password, callback) => {
     let error = false
     let message = ''
     let data = null
@@ -26,10 +26,10 @@ const auth = async (db, email, password, callback) => {
         }
     } catch (err) {
         error = true
-        message = 'auth 함수 에러 발생'
+        message = 'signin 함수 에러 발생'
     }
 
     callback(getResJSON(error, message, data))
 }
 
-module.exports = auth
+module.exports = signin

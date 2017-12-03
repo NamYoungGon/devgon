@@ -9,13 +9,16 @@ const config = {
                 schemaName: 'UserSchema',
                 modelName: 'UserModel',
             }
-        ]
+        ],
+        options: {
+            autoReconnect: true
+        }
     },
     route: [
         {
             file: './user', 
-            path: '/api/user/add', 
-            method: 'u_add',
+            path: '/api/user/register', 
+            method: 'u_register',
             type: 'post'
         },
         {

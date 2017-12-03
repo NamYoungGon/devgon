@@ -14,13 +14,25 @@ const initialState = {
         status: 'I'
     },
     status: {
-       isLoggedIn: false 
+       isLoggedIn: false,
+       name: ''
+    },
+    response: {
+        error: null,
+        message: '',
+        data: null
     }
 }
 
 // 리듀서 함수를 정의합니다. 
 const auth = (state = initialState, action) => {
     switch(action.type) {
+        case types.AUTH_RESPONSE:
+            return update(state, {
+                response: {
+                    $set: action.payload
+                }
+            })
         case types.AUTH_LOGIN:
             return update(state, {
                 login: {
@@ -29,7 +41,7 @@ const auth = (state = initialState, action) => {
                     }
                 }
             })
-        case types.AUTH_SUCCESS:
+        case types.AUTH_LOGIN_SUCCESS:
             return update(state, {
                 login: {
                     status: {
@@ -39,12 +51,39 @@ const auth = (state = initialState, action) => {
                 status: {
                     isLoggedIn: {
                         $set: true
+                    },
+                    name: {
+                        $set: action.payload
                     }
                 }
             })
-        case types.AUTH_FAIL:
+        case types.AUTH_LOGIN_FAIL:
             return update(state, {
                 login: {
+                    status: {
+                        $set: 'F'
+                    }
+                }
+            })
+        case types.AUTH_REGISTER:
+            return update(state, {
+                register: {
+                    status: {
+                        $set: 'P'
+                    }
+                }
+            })
+        case types.AUTH_REGISTER_SUCCESS:
+            return update(state, {
+                register: {
+                    status: {
+                        $set: 'S'
+                    }
+                }
+            })
+        case types.AUTH_REGISTER_FAIL:
+            return update(state, {
+                register: {
                     status: {
                         $set: 'F'
                     }

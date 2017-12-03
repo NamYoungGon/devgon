@@ -1,4 +1,4 @@
-const { auth, create, list } = require('./user')
+const { signin, signup, list } = require('./user')
 
 const routePathStr = '/api/user/'
 
@@ -8,7 +8,7 @@ const u_login = (req, res) => {
     const { email, password } = req.body
 
     if (database) {
-        auth(database, email, password, resJSON => {
+        signin(database, email, password, resJSON => {
             res.json(resJSON)
         })
     } else {
@@ -20,13 +20,13 @@ const u_login = (req, res) => {
     }
 }
 
-const u_add = (req, res) => {
+const u_register = (req, res) => {
     const database = req.app.get('database')
 
     const { email, password, name } = req.body
 
     if (database) {
-        create(database, email, password, name, resJSON => {
+        signup(database, email, password, name, resJSON => {
             res.json(resJSON)
         })
     } else {
@@ -38,7 +38,7 @@ const u_add = (req, res) => {
     }
 }
 
-const u_list = (req, res) => {
+const u_list = (req, res) => {console.log(11)
     const database = req.app.get('database')
 
     if (database) {
@@ -56,6 +56,6 @@ const u_list = (req, res) => {
 
 module.exports = {
     u_login,
-    u_add,
+    u_register,
     u_list
 }

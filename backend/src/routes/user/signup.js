@@ -1,6 +1,6 @@
 const { getResJSON } = require('./../../lib/common')
 
-const create = async (db, email, password, name, callback) => {
+const signup = async (db, email, password, name, callback) => {
     let error = false
     let message = ''
     let data = null
@@ -20,10 +20,10 @@ const create = async (db, email, password, name, callback) => {
         }
     } catch (err) {
         error = true
-        message = 'create 함수 에러 발생'
+        message = 'signup 함수 에러 발생'
     }
 
     callback(getResJSON(error, message, data))
 }
 
-module.exports = create
+module.exports = signup

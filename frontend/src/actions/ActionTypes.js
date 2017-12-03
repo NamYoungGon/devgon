@@ -4,7 +4,12 @@
     import * as types from './ActionTypes' 를 할 수 있어요.
 */
 
-export const AUTH_TEST = 'AUTH_TEST'
 export const AUTH_LOGIN = 'AUTH_LOGIN'
-export const AUTH_SUCCESS = 'AUTH_SUCCESS'
-export const AUTH_FAIL = 'AUTH_FAIL'
+export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS'
+export const AUTH_LOGIN_FAIL = 'AUTH_LOGIN_FAIL'
+
+export const AUTH_REGISTER = 'AUTH_REGISTER'
+export const AUTH_REGISTER_SUCCESS = 'AUTH_REGISTER_SUCCESS'
+export const AUTH_REGISTER_FAIL = 'AUTH_REGISTER_FAIL'
+
+export const AUTH_RESPONSE = 'AUTH_RESPONSE'
