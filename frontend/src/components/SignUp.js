@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
-import PropTypes from 'prop-types'
 
 class SignUp extends Component {
     constructor(props) {
@@ -42,25 +41,36 @@ class SignUp extends Component {
             return <Redirect to='/login'/>
 
         const authentication = this.props.authentication === true ? '로그인 상태' : (
-            <form>
-                <div className="form-group">
-                    <label htmlFor="inputEmail">Email address</label>
-                    <input type="email" name="email" className="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" value={this.state.email} onChange={this.handleChange} />
-                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+            <div>
+                <div className="row">
+                    <h5 className="ui header">Email address</h5>
+                    <div className="ui input small fluid">
+                        <input type="email" name="email" placeholder="Enter email" value={this.state.email} onChange={this.handleChange} />
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="inputPassword">Password</label>
-                    <input type="password" name="password" className="form-control" id="inputPassword" placeholder="Password" value={this.state.password} onChange={this.handleChange} />
+                <br/>
+                <div className="row">
+                    <h5 className="ui header">Password</h5>
+                    <div className="ui input small fluid">
+                        <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} />
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="inputName">Name</label>
-                    <input type="text" name="name" className="form-control" id="inputName" placeholder="name" value={this.state.name} onChange={this.handleChange} />
-                </div>           
-                <button type="button" className="btn btn-primary" onClick={this.handleClickRegister}>Register</button>
-            </form>
+                <br/>
+                <div className="row">
+                    <h5 className="ui header">Name</h5>
+                    <div className="ui input small fluid">
+                        <input type="text" name="name"  placeholder="Name" value={this.state.name} onChange={this.handleChange} />
+                    </div>
+                </div>
+                <br/>
+                <div className="row">
+                    <button type="button" className="ui button primary" onClick={this.handleClickRegister}>Register</button>
+                </div>
+            </div>
         )
         return (
-            <div className="col">
+            <div className="column">
+                <div className="ui horizontal divider">Register</div>
                 { authentication }
             </div>
         )

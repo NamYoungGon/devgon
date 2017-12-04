@@ -12,29 +12,38 @@ import { connect } from 'react-redux'
 
 class App extends Component {
     render() {
+        const menuStyles = {
+            position: 'fixed',
+            top: '0px',
+            bottom: '0px',
+            left: '0px',
+            width: '250px',
+        }
+
+        const sectionStyles = {
+            'marginLeft': '250px', 
+            'minWidth': '365px', 
+            'maxWidth': '1150px'
+        }
         return (
             <Router>
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-12 col-md-2 col-xl-2 bd-sidebar">
-                            <Menu />
+                <div>
+                    <div className="ui" style={menuStyles}>
+                        <Menu />
+                    </div>
+                    <div style={sectionStyles}>
+                        <div className="ui padded one column grid">
+                            <Switch>
+                                <Route exact path="/" component={Home}/>
+                                <Route path="/login" component={Login}/>
+                                <Route path="/register" component={Register}/>
+                                <Route path='/websocket/:sub' component={WebSocket}/>
+                                <Route component={NotFoundPage}/>
+                            </Switch>
+                        
                         </div>
-                        <main className="col-12 col-md-10 col-xl-8 py-md-3 pl-md-5 bd-content">
-                            <div className="jumbotron jumbotron-fluid">
-                                <Switch>
-                                    <Route exact path="/" component={Home}/>
-                                    <Route path="/login" component={Login}/>
-                                    <Route path="/register" component={Register}/>
-                                    <Route path='/websocket/:sub' component={WebSocket}/>
-                                    <Route component={NotFoundPage}/>
-                                </Switch>
-                            
-                            </div>
-
-                        </main>
                     </div>
                 </div>
-            
             </Router>
         );
     }

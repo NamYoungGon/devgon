@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import socket from './../lib/socket'
+
 class SignIn extends Component {
     constructor(props) {
         super(props)
@@ -22,6 +24,13 @@ class SignIn extends Component {
                 } else {
                     if (data) {
                         alert(`${message}`)
+
+                        const { name } = data
+
+                        socket.init({
+                            email, 
+                            name
+                        })
                     } else {
                         alert(`${message}`)
                         this.clearInput('password')
@@ -31,30 +40,34 @@ class SignIn extends Component {
         )
     }
     
-    clearInput = (name) => {
-        this.setState({
-            [name]: ''
-        })
-    }
+    clearInput = name => this.setState({ [name]: '' })
 
     render() {
         const authentication = this.props.authentication === true ? `${this.props.name} 님 반갑습니다.` : (
-            <form>
-                <div className="form-group">
-                    <label htmlFor="inputEmail">Email address</label>
-                    <input type="email" name="email" className="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" value={this.state.email} onChange={this.handleChange} />
-                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+            <div>
+                <div className="row">
+                    <h5 className="ui header">Email address</h5>
+                    <div className="ui input small fluid">
+                        <input type="email" name="email" placeholder="Enter email" value={this.state.email} onChange={this.handleChange} />
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="inputPassword">Password</label>
-                    <input type="password" name="password" className="form-control" id="inputPassword" placeholder="Password" value={this.state.password} onChange={this.handleChange} />
+                <br/>
+                <div className="row">
+                    <h5 className="ui header">Password</h5>
+                    <div className="ui input small fluid">
+                        <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} />
+                    </div>
                 </div>
-                <button type="button" className="btn btn-primary" onClick={this.handleClickLogin}>Login</button>
-            </form>
+                <br/>
+                <div className="row">
+                    <button type="button" className="ui button primary" onClick={this.handleClickLogin}>Login</button>
+                </div>
+            </div>
         )
 
         return (
-            <div className="col">
+            <div className="column">
+                <div className="ui horizontal divider">Login</div>
                 { authentication }
             </div>
         );
