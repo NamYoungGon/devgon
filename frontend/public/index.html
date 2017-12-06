@@ -23,9 +23,8 @@
     <title>Devgon</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script>
-        const options = { 'forceNew': true }
-        const url = 'http://localhost:3000'
-        const socket = io.connect(url, options);
+        // const options = { 'forceNew': true }
+        const socket = io('http://localhost:8000')
         window.socket = socket
     </script>
   </head>

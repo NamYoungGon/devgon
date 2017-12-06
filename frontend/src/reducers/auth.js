@@ -65,6 +65,17 @@ const auth = (state = initialState, action) => {
                     }
                 }
             })
+        case types.AUTH_LOGOUT:
+            return update(state, {
+                status: {
+                    isLoggedIn: {
+                        $set: false
+                    },
+                    name: {
+                        $set: ''
+                    }
+                }
+            })
         case types.AUTH_REGISTER:
             return update(state, {
                 register: {

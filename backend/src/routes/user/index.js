@@ -1,14 +1,27 @@
-const { signin, signup, list } = require('./user')
+const { signin, signup, signout, list } = require('./user')
 
 const routePathStr = '/api/user/'
 
 const u_login = (req, res) => {
     const database = req.app.get('database')
 
-    const { email, password } = req.body
+    let { email, password } = req.body
 
     if (database) {
+        if (email === undefined && password === undefined) {
+            if (req.cookies.devgon) {
+                const userObj = JSON.parse(req.cookies.devgon)
+                email = userObj.email
+                password = userObj.password
+            }
+        }
+
         signin(database, email, password, resJSON => {
+            if (!resJSON.error && resJSON.data) {
+                const userStr = JSON.stringify({ email, password })
+                res.cookie('devgon', userStr)
+            }
+
             res.json(resJSON)
         })
     } else {
@@ -18,6 +31,13 @@ const u_login = (req, res) => {
             error: true
         })
     }
+}
+
+const u_logout = (req, res) => {
+    res.clearCookie("devgon");
+    signout(resJSON => {
+        res.json(resJSON);
+    })
 }
 
 const u_register = (req, res) => {
@@ -57,5 +77,6 @@ const u_list = (req, res) => {
 module.exports = {
     u_login,
     u_register,
-    u_list
+    u_list,
+    u_logout
 }

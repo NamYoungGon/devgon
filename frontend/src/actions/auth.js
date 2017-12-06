@@ -2,8 +2,9 @@ import * as types from './ActionTypes'
 
 import axios from 'axios'
 
-export function login(email, password) {
+export function login_request(email, password) {
     return (dispatch) => {
+        dispatch(login());
         return axios.post('/api/user/login', { email, password })
             .then((res) => {
                 dispatch(response(res))
@@ -22,6 +23,12 @@ export function login(email, password) {
     }
 }
 
+export function login() {
+    return {
+        type: types.AUTH_LOGIN
+    }
+}
+
 export function login_success(name) {
     return {
         type: types.AUTH_LOGIN_SUCCESS,
@@ -32,6 +39,22 @@ export function login_success(name) {
 export function login_fail() {
     return {
         type: types.AUTH_LOGIN_FAIL
+    }
+}
+
+export function logout_request() {
+    return (dispatch) => {
+        return axios.post('/api/user/logout')
+            .then((res) => {
+                dispatch(logout())
+            }).catch((err) => {
+                dispatch(logout())
+            })
+    }
+}
+export function logout() {
+    return {
+        type: types.AUTH_LOGOUT
     }
 }
 

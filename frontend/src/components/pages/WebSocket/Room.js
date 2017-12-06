@@ -1,4 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+// import update from 'react-addons-update';
+import PropTypes from 'prop-types';
+
+// import { getMessagesByRecepient } from './../../../lib/message'
+// import socket from './../../../lib/socket';
 
 class Room extends Component {
     render() {
@@ -13,6 +18,14 @@ class Room extends Component {
             </div>
         )
     }
+}
+
+Room.propTypes = {
+    name: PropTypes.string
+}
+
+Room.defaultProps = {
+    name: ''
 }
 
 export default Room

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import Menu from './../components/Menu'
 import Home from './Home'
@@ -8,9 +9,27 @@ import Register from './Register'
 import WebSocket from './WebSocket'
 import NotFoundPage from './../components/NotFoundPage'
 
+import * as auth from './../actions/auth'
 import { connect } from 'react-redux'
 
+import socket from './../lib/socket'
+
 class App extends Component {
+    componentDidMount() {
+        if (this.props.isLoggedIn === false) {
+            this.props.login().then(
+                (res) => {
+                    const { name, email } = this.props.response.data
+
+                    socket.init({
+                        email, 
+                        name
+                    })
+                 }
+            )
+        }
+    }
+
     render() {
         const menuStyles = {
             position: 'fixed',
@@ -57,10 +76,16 @@ class App extends Component {
 // <Route path="/search" component={Search}/>
 // <Route component={NoMatch}/>
 
+App.propTypes = {
+    isLoggedIn: PropTypes.bool,
+    name: PropTypes.string
+}
+
 export default connect(
     (state) => {
         return {
-            // isLoggedIn: state.auth.status.isLoggedIn
+            isLoggedIn: state.auth.status.isLoggedIn,
+            response: state.auth.response
         };
     },
 /* 
@@ -69,9 +94,9 @@ export default connect(
 */
     (dispatch) => {
         return {
-            // login: (email, password) => {
-            //     dispatch(auth.login(email, password))
-            // }
-        };
+            login: () => {
+                return dispatch(auth.login_request())
+            }
+        }
     }
 )(App);

@@ -14,11 +14,18 @@ class Login extends Component {
              }
         )
     }
+    handleLogout = () => {
+        return this.props.logout().then(
+            (res) => {
+                return ;
+            }
+        )
+    }
 
     render() {
         return (
             <div>
-                <SignIn onLogin={this.handleLogin} authentication={this.props.isLoggedIn} name={this.props.name} />
+                <SignIn onLogin={this.handleLogin} onLogout={this.handleLogout} authentication={this.props.isLoggedIn} name={this.props.name} />
             </div>
         );
     }
@@ -44,7 +51,10 @@ export default connect(
     (dispatch) => {
         return {
             login: (email, password) => {
-                return dispatch(auth.login(email, password))
+                return dispatch(auth.login_request(email, password))
+            },
+            logout: () => {
+                return dispatch(auth.logout_request())
             }
         }
     }

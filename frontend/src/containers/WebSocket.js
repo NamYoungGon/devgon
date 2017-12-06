@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 
-import * as auth from './../actions/auth'
 import { connect } from 'react-redux'
 
 import { Basic, Room } from './../components/pages/WebSocket';
@@ -18,8 +17,7 @@ class WebSocket extends Component {
 
     render() {
         if (!this.props.isLoggedIn) {
-            // alert('로그인 페이지로 갑니다.')
-            // return <Redirect to='/login'/>
+            return <Redirect to='/login'/>
         }
 
         const { match } = this.props
@@ -32,11 +30,26 @@ class WebSocket extends Component {
             <Room authentication={this.props.isLoggedIn} name={this.props.name} />
         )
 
-        const output = match.params.sub === 'basic' ? outputBasic : outputRoom
-        
+        let output
+        let outputSub = ''
+        switch (match.params.sub) {
+            case 'basic':
+                output = outputBasic
+                outputSub = 'Basic'
+                break
+                case 'room':
+                output = outputRoom
+                outputSub = 'Room'
+                break
+            default:
+                output = null
+                break
+        }
+
         return (
-            <div className="column">
-                { output }
+            <div className="">
+                <div className="ui horizontal divider">{outputSub}</div>
+                {output}
             </div>
         )
     }

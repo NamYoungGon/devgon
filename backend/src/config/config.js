@@ -35,6 +35,12 @@ const config = {
         },
         {
             file: './user', 
+            path: '/api/user/logout', 
+            method: 'u_logout',
+            type: 'post'
+        },
+        {
+            file: './user', 
             path: '/api/user/list', 
             method: 'u_list',
             type: 'post'

@@ -9,14 +9,21 @@ const signin = async (db, email, password, callback) => {
         const results = await db.UserModel.findByEmail(email)
 
         if (results) {
-            const user = new db.UserModel({ email })
-            const authenticated = user.authenticate(password, results.salt, results.hashed_password)
+            let authenticated = false
+
+            if (password === results.hashed_password) {
+                authenticated = true
+            } else {
+                const user = new db.UserModel({ email })
+                authenticated = user.authenticate(password, results.salt, results.hashed_password)
+            }
 
             if (authenticated) {
                 message = '사용자 인증을 성공하였습니다.'
                 data = {
                     email,
-                    name: results.name
+                    hashed_password: results.hashed_password,
+                    name: results.name,
                 }
             } else {
                 message = '패스워드가 일치하지 않습니다.'

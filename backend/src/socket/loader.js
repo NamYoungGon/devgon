@@ -18,7 +18,7 @@ function bind(io) {
     io.sockets.on('connection', (socket) => {
         socket.on('login', (login) => {
             if (login_ids[login.id]) return false
-            
+
             console.log(`접속한 소켓 ID : ${socket.id}`)
     
             // Map 에 클라이언트 ID 저장
@@ -29,7 +29,7 @@ function bind(io) {
     
             console.log(`접속한 클라이언트 : ${Object.keys(login_ids).length}명`)
         })
-    
+
         socket.on('message', res => {
             /**
              * res
