@@ -8,6 +8,12 @@ const config = {
                 collection: 'users', 
                 schemaName: 'UserSchema',
                 modelName: 'UserModel',
+            },
+            {
+                file: './message_schema', 
+                collection: 'messages', 
+                schemaName: 'MessageSchema',
+                modelName: 'MessageModel'
             }
         ],
         options: {
@@ -31,6 +37,12 @@ const config = {
             file: './user', 
             path: '/api/user/list', 
             method: 'u_list',
+            type: 'post'
+        },
+        {
+            file: './message', 
+            path: '/api/message/list', 
+            method: 'm_messages',
             type: 'post'
         }
     ]

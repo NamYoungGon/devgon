@@ -38,7 +38,7 @@ const u_register = (req, res) => {
     }
 }
 
-const u_list = (req, res) => {console.log(11)
+const u_list = (req, res) => {
     const database = req.app.get('database')
 
     if (database) {

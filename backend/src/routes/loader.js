@@ -1,6 +1,6 @@
 const loader = {}
 
-const config = require('./../config')
+const config = require('./../config/config')
 
 loader.init = (app, router) => {
     connect(app, router)

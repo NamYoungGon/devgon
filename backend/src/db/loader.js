@@ -28,7 +28,7 @@ function connect(app, config) {
 function createSchema(app, config) {
     let curSchema
     let curModel
-    console.log("createSchema")
+
     config.db.schemas.forEach((data, index) => {
         curSchema = require(data.file).createSchema(mongoose)
         curModel = mongoose.model(data.collection, curSchema)
