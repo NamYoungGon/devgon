@@ -19,12 +19,14 @@ class App extends Component {
         if (this.props.isLoggedIn === false) {
             this.props.login().then(
                 (res) => {
-                    const { name, email } = this.props.response.data
-
-                    socket.init({
-                        email, 
-                        name
-                    })
+                    if (this.props.name !== '') {
+                        const { name, email } = this.props.response.data
+    
+                        socket.init({
+                            email, 
+                            name
+                        })
+                    }
                  }
             )
         }
@@ -84,6 +86,7 @@ App.propTypes = {
 export default connect(
     (state) => {
         return {
+            name: state.auth.status.name,
             isLoggedIn: state.auth.status.isLoggedIn,
             response: state.auth.response
         };

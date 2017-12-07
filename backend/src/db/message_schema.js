@@ -10,7 +10,7 @@ Schema.createSchema = function (mongoose) {
         command: { type: String, index: 'hashed', default: 'chat' },
         type: { type: String, index: 'hashed', default: 'text' },
         data: { type: String, required: true },
-        roomname: { type: String, index: 'hashed', default: '' }
+        date: { type: Object, default: {} }
     })
 
     /**
@@ -21,13 +21,22 @@ Schema.createSchema = function (mongoose) {
      * command: chat
      * type: text
      * data: 메시지
-     * roomname: 영향없음
+     * 
+     * ---------------------------
+     * 
+     * recepient 
+     * 
+     * sender: ??
+     * recepient: 방이름
+     * command: roomchat
+     * type: text
+     * data: 메시지
      * 
      */
     // 
 
-    MessageSchema.statics.findByRoomName = function (roomname, callback) {
-        return this.findOne({ roomname }, callback)
+    MessageSchema.statics.findByRoomId = function (roomid, callback) {
+        return this.findOne({ roomid }, callback)
     }
 
     MessageSchema.statics.findByRecepient = function (recepient) {

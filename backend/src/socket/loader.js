@@ -14,6 +14,24 @@ function connect(app, server) {
     bind(io)
 }
 
+function getDateObj() {
+    const date = new Date()
+
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
+
+    return {
+        year,
+        month,
+        day,
+        hour,
+        minute
+    }
+}
+
 function bind(io) {
     io.sockets.on('connection', (socket) => {
         socket.on('login', (login) => {
@@ -38,10 +56,9 @@ function bind(io) {
              * -> command
              * -> type
              * -> data
-             * -> roomname
              */
-    
             const { recepient, command } = res
+            res.date = getDateObj()
             /**
              * recepient
              * -> ALL (나를 포함한 모든 클라이언트)
@@ -51,14 +68,55 @@ function bind(io) {
              * -> roomchat (룸 채팅)
              * -> chat (1:1 채팅)
              */
-    
             if (recepient === 'ALL') {
                 const result = message.save(res, resJSON => {
-                    console.log(resJSON)
                     const { error } = resJSON
-                    if (!error)
+                    if (!error) {
                         io.sockets.emit('message', res)
+                    }
                 })
+            } else {
+                if (command === 'roomchat') {
+                    const result = message.save(res, resJSON => {
+                        const { error } = resJSON
+                        if (!error) {
+                            io.sockets.in(recepient).emit('message', res)
+                        }
+                    })
+                }
+            }
+        })
+
+        socket.on('room', res => {
+            /**
+             * res
+             * -> command
+             * -> roomId
+             * -> roomName
+             * -> roomOwner
+             * 
+             * command
+             * -> create
+             * -> update
+             * -> delete
+             * -> join
+             * -> leave
+             */
+            const { command, roomId, roomName, roomOwer } = res
+
+            if (command === 'create') {
+                // 해당 아이디의 방이 존재하지 않을 경우
+                if (!io.sockets.adapter.rooms[roomId]) {
+                    socket.join(roomId)
+                }
+            } else if (command === 'update') {
+                
+            } else if (command === 'delete') {
+
+            } else if (command === 'join') {
+                socket.join(roomId)
+            } else if (command === 'leave') {
+                socket.leave(roomId)
             }
         })
     })

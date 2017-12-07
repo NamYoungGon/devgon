@@ -6,7 +6,7 @@ const m_messages = (req, res) => {
     const { recepient } = req.body
 
     if (database) {
-        if (recepient === 'ALL') {
+        if (recepient) {
             getMessagesByRecepient(recepient, resJSON => {
                 res.json(resJSON)
             })

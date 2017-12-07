@@ -19,7 +19,7 @@ const save = async (req, callback) => {
             error = true
             message = '메시지 저장을 실패하였습니다.'
         }
-    } catch (err) {
+    } catch (err) {console.log(err)
         error = true
         message = 'message save 함수 에러 발생'
     }

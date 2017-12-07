@@ -70,7 +70,7 @@ class SignUp extends Component {
         )
         return (
             <div className="column">
-                <div className="ui horizontal divider">Register</div>
+                <h3 className="ui dividing header">Register</h3>
                 { authentication }
             </div>
         )

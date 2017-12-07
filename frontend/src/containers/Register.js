@@ -17,9 +17,7 @@ class Register extends Component {
 
     render() {
         return (
-            <div>
-                <SignUp onRegister={this.handleRegister} authentication={this.props.isLoggedIn} />
-            </div>
+            <SignUp onRegister={this.handleRegister} authentication={this.props.isLoggedIn} />
         )
     }
 }

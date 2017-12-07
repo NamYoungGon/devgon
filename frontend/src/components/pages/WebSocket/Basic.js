@@ -13,31 +13,38 @@ class Basic extends Component {
             message: '',
             messages: []
         }
-
-        let that = this
-        socket.on('message', (res) => {
-            that.addMessage(res)
-        })
     }
 
     componentDidMount() {
-        getMessagesByRecepient('ALL').then((res) => {
+        getMessagesByRecepient('basic').then((res) => {
             const { messages } = res.data.data
-console.log(messages)
+
             this.setState({
                 messages
             })
 
+            socket.emit('room', {
+                command: 'join',
+                roomId: 'basic',
+                roomName: 'basic',
+                roomOwner: 'admin'
+            })
+
             this.moveScrollBottom()
         })
+
+        socket.on('message', (res) => {
+            this.addMessage(res)
+        })
+
     }
 
     handleChange = e => this.setState({ [e.target.name]: e.target.value })
 
     handleClickSend = () => {
         const sender = this.props.name
-        const recepient = 'ALL'
-        const command = 'chat'
+        const recepient = 'basic'
+        const command = 'roomchat'
         const type = 'text'
         const data = this.state.message
 
@@ -83,6 +90,24 @@ console.log(messages)
 
         return (
             <div>
+                <div>
+                    <div className="ui medium header">
+                        <i aria-hidden="true" className="users big icon"></i>
+                        User List
+                    </div>
+                    <div role="list" className="ui animated middle aligned list">
+                        <div role="listitem" className="item">
+                            <div className="content">
+                                <div className="header">Grape</div>
+                            </div>
+                        </div>
+                        <div role="listitem" className="item">
+                            <div className="content">
+                                <div className="header">Mang</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="discussion-wrap" ref={wrap => {this.discussionWrap = wrap}}>
                     {messagesStr}
                 </div>
@@ -101,10 +126,29 @@ console.log(messages)
 class Messages extends Component {
     render() {
         const { messages, name } = this.props
+        
+        let prevMonth, prevDay
+
+        const messagesStr = messages.map((data, index) => {
+            const date = data.date
+            const { year, month, day } = date
+            let divideStr = null
+            if (prevMonth !== month || prevDay !== day) {
+                prevMonth = month
+                prevDay = day
+                divideStr = <div className="ui horizontal divider">{ year }년 { month }월 { day }일</div>
+            }
+            return (
+                <div key={index}>
+                    { divideStr } 
+                    <Message message={ data } name={ name } />
+                </div>
+            )
+        })
 
         return (
             <div className="discussion">
-                { messages.map((data, index) => <Message message={data} key={index} name={name} />) }
+                { messagesStr }
             </div>
         )
     }
@@ -112,9 +156,9 @@ class Messages extends Component {
 
 class Message extends Component {
     render() {
-        const { sender, data } = this.props.message
+        const { sender, date, data } = this.props.message
+        const { hour, minute } = date
         const name = this.props.name
-
         const isSelf = sender === name
         const liClass = `message ${isSelf ? 'self' : 'other'}`
         const nameStr = isSelf ? null : (
@@ -125,7 +169,7 @@ class Message extends Component {
         )
 
         const timeStr = (
-            <time dateTime="2016-02-10 17:40">오전 09:32</time>
+            <time>{hour}:{minute}</time>
         )
         const cntStr = (
             <span className="cnt"></span>

@@ -47,8 +47,8 @@ class WebSocket extends Component {
         }
 
         return (
-            <div className="">
-                <div className="ui horizontal divider">{outputSub}</div>
+            <div className="column">
+                <h3 className="ui dividing header">{outputSub}</h3>
                 {output}
             </div>
         )

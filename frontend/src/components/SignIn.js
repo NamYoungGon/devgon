@@ -80,7 +80,7 @@ class SignIn extends Component {
 
         return (
             <div className="column">
-                <div className="ui horizontal divider">Login</div>
+                <h3 className="ui dividing header">Login</h3>
                 { authentication }
             </div>
         );
