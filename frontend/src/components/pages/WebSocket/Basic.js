@@ -11,7 +11,8 @@ class Basic extends Component {
 
         this.state = {
             message: '',
-            messages: []
+            messages: [],
+            users: {}
         }
     }
 
@@ -35,6 +36,12 @@ class Basic extends Component {
 
         socket.on('message', (res) => {
             this.addMessage(res)
+        })
+
+        socket.on('join', (res) => {
+            const { users } = res
+console.log(users)
+            this.setState({ users })
         })
 
     }
@@ -88,26 +95,11 @@ class Basic extends Component {
         const name = this.props.name
         const messagesStr = <Messages messages={messages} name={name} />
 
+        const usersStr = <JoinedUsers users={this.state.users} />
+
         return (
             <div>
-                <div>
-                    <div className="ui medium header">
-                        <i aria-hidden="true" className="users big icon"></i>
-                        User List
-                    </div>
-                    <div role="list" className="ui animated middle aligned list">
-                        <div role="listitem" className="item">
-                            <div className="content">
-                                <div className="header">Grape</div>
-                            </div>
-                        </div>
-                        <div role="listitem" className="item">
-                            <div className="content">
-                                <div className="header">Mang</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {usersStr}
                 <div className="discussion-wrap" ref={wrap => {this.discussionWrap = wrap}}>
                     {messagesStr}
                 </div>
@@ -117,6 +109,33 @@ class Basic extends Component {
                         <input type="text" name="message" placeholder="Enter message" value={this.state.message} onChange={this.handleChange} onKeyUp={this.handleKeyUpSend} />
                         <button type="button" className="ui button" onClick={this.handleClickSend}>Send</button>
                     </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+class JoinedUsers extends Component {
+    render() {
+        const { users } = this.props
+        const usersStr = Object.keys(this.props.users).map((user, index) => {
+            return (
+                <div role="listitem" className="item" key={index}>
+                    <div className="content">
+                        <div className="header">{users[user].name}</div>
+                    </div>
+                </div>
+            )
+        })
+        
+        return (
+            <div>
+                <div className="ui medium header">
+                    <i aria-hidden="true" className="users big icon"></i>
+                    User List
+                </div>
+                <div role="list" className="ui animated middle aligned list">
+                    {usersStr}
                 </div>
             </div>
         )
