@@ -12,7 +12,8 @@ class Basic extends Component {
         this.state = {
             message: '',
             messages: [],
-            users: {}
+            users: {},
+            isFocus: false
         }
     }
 
@@ -20,9 +21,7 @@ class Basic extends Component {
         getMessagesByRecepient('basic').then((res) => {
             const { messages } = res.data.data
 
-            this.setState({
-                messages
-            })
+            this.setState({ messages })
 
             socket.emit('room', {
                 command: 'join',
@@ -35,15 +34,26 @@ class Basic extends Component {
         })
 
         socket.on('message', (res) => {
+            const isFocus = document.hasFocus()
+
             this.addMessage(res)
+            this.setState({ isFocus })
+
+            if (!isFocus) {
+                socket.doNotify('arrived message')
+            }
         })
 
         socket.on('join', (res) => {
             const { users } = res
-console.log(users)
             this.setState({ users })
         })
 
+        window.addEventListener('focus', () => {
+            if (socket.getIsLogined() && this.state.isFocus === false) {
+                this.setState({ isFocus : true })
+            }
+        })
     }
 
     handleChange = e => this.setState({ [e.target.name]: e.target.value })
@@ -118,7 +128,8 @@ console.log(users)
 class JoinedUsers extends Component {
     render() {
         const { users } = this.props
-        const usersStr = Object.keys(this.props.users).map((user, index) => {
+        
+        const usersStr = Object.keys(users).map((user, index) => {
             return (
                 <div role="listitem" className="item" key={index}>
                     <div className="content">
@@ -190,19 +201,15 @@ class Message extends Component {
         const timeStr = (
             <time>{hour}:{minute}</time>
         )
-        const cntStr = (
-            <span className="cnt"></span>
-        )
+        
         return (
             <div className={liClass}>
                 {nameStr}
                 { isSelf ? timeStr : null }
-                { isSelf ? cntStr : null }
                 <div className="ui card">
                     <div className="content">{data}</div>
                 </div>
                 { !isSelf ? timeStr : null }
-                { !isSelf ? cntStr : null }
             </div>
         )
     }

@@ -37,21 +37,29 @@ function getDateObj() {
 }
 
 function bind(io) {
+    /*
+        io.sockects : 나를 포함한 모든 클라이언트
+        socket.broadcast : 나를 제외한 모든 클라이언트
+        io.sockets(socket.id) : 특정 클라이언트
+        socket.join(room name) : 방 참가
+        socket.leave(room name) : 방 나옴 (disconnect 시 자동으로 나와짐)
+        io.sockets.in(room name) : 방에 있는 클라이언트
+        io.sockets.manager.rooms : 모든 방 목록
+        io.sockets.clients(room name) : 방 안에 있는 모든 클라이언트의 socket id
+    */
     io.sockets.on('connection', (socket) => {
         socket.on('login', (login) => {
             const { email, name } = login
-            if (login_emails[email]) return false
 
-            console.log(`접속한 소켓 ID : ${socket.id}`)
+            if (login_emails[email]) return false
+            
+            console.log(`User connect : email -> ${email}, name -> ${name}`)
     
             // Map 에 클라이언트 ID 저장
             login_emails[email] = socket.id
     
             // 소켓에 유저 정보 저장
-            socket.user = {
-                email,
-                name
-            }
+            socket.user = { email, name }
 
             socket.room = null
 
@@ -136,14 +144,12 @@ function bind(io) {
                 })
 
             } else if (command === 'leave') {
-
                 socket.leave(roomId)
-
             }
         })
 
         socket.on('disconnect', () => {
-            disconnect(socket)
+            disconnect(io, socket)
         })
     })
 }
@@ -154,13 +160,40 @@ function joinRoom(socket, res) {
     if (!usersInRoom[roomId]) usersInRoom[roomId] = {}
 
     usersInRoom[roomId][socket.id] = socket.user
+
     socket.room = roomId
     socket.join(roomId)
 }
 
-function disconnect(socket) {
+function getUsersInRoom(socket) {
+    let output = {}
+
     if (socket.room) {
-        delete usersInRoom[socket.room][socket.id]
+        output = usersInRoom[socket.room]
+    }
+
+    return output
+}
+
+function disconnect(io, socket) {
+    /**
+     * room -> 방 아이디
+     * id -> 소켓 아이디
+     * email -> 이메일
+     */
+    const { room, id, user } = socket
+    
+    if (room) {
+        delete usersInRoom[room][id]
+
+        io.sockets.in(room).emit('join', {
+            users: usersInRoom[room]
+        })
+    }
+
+    if (user) {
+        const { email, name } = user
+        delete login_emails[email]
     }
 }
 

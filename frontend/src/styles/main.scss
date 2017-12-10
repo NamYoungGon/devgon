@@ -67,7 +67,12 @@
             }
 
             .cnt {
-                color: yellow;
+                bottom: 5px;
+                display: inline-block;
+                position: relative;
+                font-size: 0.7em;
+                color: #ffc211;
+                margin: 0 5px;
             }
         }
 

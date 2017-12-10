@@ -74,9 +74,7 @@ export default connect(
 */
     (dispatch) => {
         return {
-            // login: (email, password) => {
-            //     return dispatch(auth.login(email, password))
-            // }
+
         }
     }
 )(WebSocket)

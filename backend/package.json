@@ -4,14 +4,21 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "cookie-parser": "^1.4.3",
-    "crypto": "^1.0.1",
-    "express": "^4.16.2",
-    "express-session": "^1.15.6",
-    "mongodb": "^2.2.33",
-    "mongoose": "^4.13.5",
+    "body-parser": "latest",
+    "cookie-parser": "latest",
+    "crypto": "latest",
+    "express": "latest",
+    "express-session": "latest",
+    "fs": "^0.0.1-security",
+    "global": "^4.3.2",
+    "merge-descriptors": "latest",
+    "mongodb": "latest",
+    "mongoose": "latest",
     "path": "^0.12.7",
-    "socket.io": "^2.0.4"
+    "socket.io": "latest",
+    "webpack": "^3.10.0"
+  },
+  "engines": {
+    "node": "v8.5.0"
   }
 }

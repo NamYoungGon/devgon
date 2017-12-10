@@ -1,5 +1,5 @@
 const config = {
-    port: 8000,
+    port: 8001,
     db: {
         url: 'mongodb://admin:skadudrhs@ds123896.mlab.com:23896/devgon',
         schemas: [

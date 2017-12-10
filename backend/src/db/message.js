@@ -1,7 +1,6 @@
 const { getResJSON } = require('./../lib/common')
 
 const save = async (req, callback) => {
-
     const database = global.database
 
     let error = false
@@ -27,6 +26,35 @@ const save = async (req, callback) => {
     callback(getResJSON(error, message, data))
 }
 
+const getMessagesByRecepient = async (req, callback) => {
+    const database = global.database
+    
+    let error = false
+    let message = ''
+    let data = null
+
+    try {
+        const results = await database.MessageModel.findByRecepient(req)
+        
+        if (results) {
+            data = { messages: [] }
+
+            Array.from(results).forEach(aMessage => {
+                data.messages.push(aMessage)
+            })
+        } else {
+            message = '조회된 메시지가 없습니다.'
+        }
+
+    } catch (err) {
+        error = true
+        message = 'getMessagesByRecepient 함수 에러 발생'
+    }
+
+    callback(getResJSON(error, message, data))
+}
+
 module.exports = {
-    save
+    save,
+    getMessagesByRecepient
 }

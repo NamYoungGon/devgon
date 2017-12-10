@@ -21,6 +21,8 @@ Schema.createSchema = function (mongoose) {
      * command: chat
      * type: text
      * data: 메시지
+     * date: 시간
+     * readInfo: 읽었는지 여부
      * 
      * ---------------------------
      * 
@@ -42,10 +44,6 @@ Schema.createSchema = function (mongoose) {
     MessageSchema.statics.findByRecepient = function (recepient) {
         return this.find({ recepient })
     }
-
-    // MessageSchema.statics.findAll = function (callback) {
-    //     return this.find({}, callback)
-    // }
 
 
 

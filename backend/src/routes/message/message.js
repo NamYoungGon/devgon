@@ -2,7 +2,7 @@ const { getResJSON } = require('./../../lib/common')
 
 const getMessagesByRecepient = async (recepient, callback) => {
     const database = global.database
-
+    
     let error = false
     let message = ''
     let data = null
