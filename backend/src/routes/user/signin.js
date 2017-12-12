@@ -24,6 +24,7 @@ const signin = async (db, email, password, callback) => {
                     email,
                     hashed_password: results.hashed_password,
                     name: results.name,
+                    no: results.no
                 }
             } else {
                 message = '패스워드가 일치하지 않습니다.'

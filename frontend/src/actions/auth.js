@@ -9,7 +9,7 @@ export function login_request(email, password) {
             .then((res) => {
                 dispatch(response(res))
                 if (res.data.data)
-                    dispatch(login_success(res.data.data.name))
+                    dispatch(login_success(res.data.data))
             }).catch((err) => {
                 dispatch(response({
                     data: {

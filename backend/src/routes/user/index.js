@@ -1,5 +1,4 @@
 const { signin, signup, signout, list } = require('./user')
-
 const routePathStr = '/api/user/'
 
 const u_login = (req, res) => {

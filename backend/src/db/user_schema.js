@@ -1,16 +1,30 @@
 const crypto = require('crypto')
+const validator = require('validator')
 
 const Schema = {}
 
-Schema.createSchema = function (mongoose) {
+Schema.createSchema = function (mongoose, autoIncrement) {
 
     const UserSchema = mongoose.Schema({
-        email: { type: String, required: true, unique: true, default: '' },
+        // 열거형
+        // enum : ['Admin', 'Owner', 'User']
+        email: { 
+            type: String, required: true, unique: true, validate: (value) => {
+                return validator.isEmail(value)
+            }
+        },
         name: { type: String, index: 'hashed', default: '' },
         hashed_password: { type: String, required: true, default: '' },
-        salt: { type: String, required: true},
+        salt: { type: String, required: true },
         created_at: { type: Date, index: { unique: false }, default: Date.now() },
         updated_at: { type: Date, index: { unique: false }, default: Date.now() }
+    })
+
+    UserSchema.plugin(autoIncrement.plugin, { 
+        model: 'UserModel',
+        field: 'no',
+        startAt: 0,
+        incrementBy: 1
     })
 
     UserSchema

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const autoIncrement = require('mongoose-auto-increment')
 
 const loader = {}
 
@@ -9,6 +10,7 @@ loader.init = (app, config) => {
 function connect(app, config) {
     mongoose.Promise = global.Promise
     mongoose.connect(config.db.url, config.db.options)
+    autoIncrement.initialize(mongoose.connection)
     loader.db = mongoose.connection
 
     // 데이터베이스 연결 시 동작
@@ -30,7 +32,7 @@ function createSchema(app, config) {
     let curModel
 
     config.db.schemas.forEach((data, index) => {
-        curSchema = require(data.file).createSchema(mongoose)
+        curSchema = require(data.file).createSchema(mongoose, autoIncrement)
         curModel = mongoose.model(data.collection, curSchema)
 
         loader[data.schemaName] = curSchema

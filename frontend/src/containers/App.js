@@ -20,11 +20,12 @@ class App extends Component {
             this.props.login().then(
                 (res) => {
                     if (this.props.name !== '') {
-                        const { name, email } = this.props.response.data
+                        const { name, email, no } = this.props.response.data
     
                         socket.init({
                             email, 
-                            name
+                            name,
+                            no
                         })
                     }
                 }
@@ -33,26 +34,13 @@ class App extends Component {
     }
 
     render() {
-        const menuStyles = {
-            position: 'fixed',
-            top: '0px',
-            bottom: '0px',
-            left: '0px',
-            width: '250px',
-        }
-
-        const sectionStyles = {
-            'marginLeft': '250px', 
-            'minWidth': '365px', 
-            'maxWidth': '1150px'
-        }
         return (
             <Router>
                 <div>
-                    <div className="ui" style={menuStyles}>
+                    <div className="side-menu">
                         <Menu />
                     </div>
-                    <div style={sectionStyles}>
+                    <main>
                         <div className="ui padded one column grid">
                             <Switch>
                                 <Route exact path="/" component={Home}/>
@@ -63,7 +51,7 @@ class App extends Component {
                             </Switch>
                         
                         </div>
-                    </div>
+                    </main>
                 </div>
             </Router>
         );

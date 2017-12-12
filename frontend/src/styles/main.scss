@@ -1,5 +1,30 @@
 @import 'lib/reset.css';
 
+
+.side-menu {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 250px;
+}
+
+main {
+    margin-left: 250px; 
+    min-width: 365px;
+    max-width: 1150px;
+}
+
+@media ( max-width: 610px ) {
+    .side-menu { 
+        display: none;
+    }
+
+    main {
+        margin-left: 0px; 
+    }
+}
+
 .nav-item + .nav-item {
     margin-bottom: 20px;
 }
@@ -15,6 +40,7 @@
     background: #f9f9f9;
     overflow: auto;
 }
+
 .discussion {
     list-style: none;
     margin: 0;
@@ -49,6 +75,7 @@
 
                 .content {
                     padding: 0.7em 1em;
+                    word-break: break-all;
                 }
             }
 

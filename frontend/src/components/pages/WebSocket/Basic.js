@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { getMessagesByRecepient } from './../../../lib/message'
 import socket from './../../../lib/socket';
+import { addLeadingZero } from './../../../lib/time';
 
 class Basic extends Component {
     constructor(props) {
@@ -59,7 +60,8 @@ class Basic extends Component {
     handleChange = e => this.setState({ [e.target.name]: e.target.value })
 
     handleClickSend = () => {
-        const sender = this.props.name
+        const { name, u_no } = this.props.status
+        const sender = name
         const recepient = 'basic'
         const command = 'roomchat'
         const type = 'text'
@@ -70,7 +72,8 @@ class Basic extends Component {
             recepient,
             command,
             type,
-            data
+            data,
+            u_no
         })
 
         this.clearInput('message')
@@ -102,7 +105,7 @@ class Basic extends Component {
 
     render() {
         const messages = this.state.messages
-        const name = this.props.name
+        const name = this.props.status.name
         const messagesStr = <Messages messages={messages} name={name} />
 
         const usersStr = <JoinedUsers users={this.state.users} />
@@ -166,7 +169,7 @@ class Messages extends Component {
             if (prevMonth !== month || prevDay !== day) {
                 prevMonth = month
                 prevDay = day
-                divideStr = <div className="ui horizontal divider">{ year }년 { month }월 { day }일</div>
+                divideStr = <div className="ui horizontal divider">{ year }년 { addLeadingZero(month) }월 { addLeadingZero(day) }일</div>
             }
             return (
                 <div key={index}>
@@ -199,7 +202,7 @@ class Message extends Component {
         )
 
         const timeStr = (
-            <time>{hour}:{minute}</time>
+            <time>{addLeadingZero(hour)}:{addLeadingZero(minute)}</time>
         )
         
         return (
@@ -216,11 +219,11 @@ class Message extends Component {
 }
 
 Basic.propTypes = {
-    name: PropTypes.string
+    status: PropTypes.object
 }
 
 Basic.defaultProps = {
-    name: ''
+    status: { }
 }
 
 export default Basic

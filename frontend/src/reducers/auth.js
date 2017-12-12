@@ -15,6 +15,7 @@ const initialState = {
     },
     status: {
        isLoggedIn: false,
+       u_no: -1,
        name: ''
     },
     response: {
@@ -53,7 +54,10 @@ const auth = (state = initialState, action) => {
                         $set: true
                     },
                     name: {
-                        $set: action.payload
+                        $set: action.payload.name
+                    },
+                    u_no: {
+                        $set: action.payload.no
                     }
                 }
             })

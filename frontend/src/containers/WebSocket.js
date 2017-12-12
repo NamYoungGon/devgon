@@ -16,18 +16,18 @@ class WebSocket extends Component {
     }
 
     render() {
-        if (!this.props.isLoggedIn) {
+        if (!this.props.status.isLoggedIn) {
             return <Redirect to='/login'/>
         }
 
         const { match } = this.props
         
         const outputBasic = (
-            <Basic authentication={this.props.isLoggedIn} name={this.props.name} />
+            <Basic status={this.props.status} />
         )
 
         const outputRoom = (
-            <Room authentication={this.props.isLoggedIn} name={this.props.name} />
+            <Room status={this.props.status} />
         )
 
         let output
@@ -37,7 +37,7 @@ class WebSocket extends Component {
                 output = outputBasic
                 outputSub = 'Basic'
                 break
-                case 'room':
+            case 'room':
                 output = outputRoom
                 outputSub = 'Room'
                 break
@@ -56,15 +56,14 @@ class WebSocket extends Component {
 }
 
 WebSocket.propTypes = {
-    isLoggedIn: PropTypes.bool,
-    name: PropTypes.string
+    status: PropTypes.object,
+    response: PropTypes.object
 }
 
 export default connect(
     (state) => {
         return {
-            name: state.auth.status.name,
-            isLoggedIn: state.auth.status.isLoggedIn,
+            status: state.auth.status,
             response: state.auth.response
         };
     },

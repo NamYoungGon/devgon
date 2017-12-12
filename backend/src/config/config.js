@@ -1,5 +1,14 @@
 const config = {
     port: 8001,
+    nodemailer: {
+        service: 'gmail',
+        auth: {
+            user: 'nyg4628@gmail.com',
+            pass: ''
+        },
+        subject: 'devgon 인증 메일입니다.',
+        html: '인증번호 입니다. %d'
+    },
     db: {
         url: 'mongodb://admin:skadudrhs@ds123896.mlab.com:23896/devgon',
         schemas: [
@@ -17,7 +26,8 @@ const config = {
             }
         ],
         options: {
-            autoReconnect: true
+            autoReconnect: true,
+            useMongoClient: true
         }
     },
     route: [

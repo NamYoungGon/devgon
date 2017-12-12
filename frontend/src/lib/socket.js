@@ -2,12 +2,12 @@ let socket = null,
     isLogined = false
 
 function login(user) {
-    const { email, name } = user
+    const { email, name, no } = user
     
     socket = window.socket
 
     if (socket) {
-        emit('login', { email, name })
+        emit('login', { email, name, no })
 
         isLogined = true
     }

@@ -7,6 +7,7 @@ class SignUp extends Component {
 
         this.state = {
             email: '',
+            emailAuthentication: false,
             password: '',
             name: '',
             redirect: false
@@ -35,6 +36,10 @@ class SignUp extends Component {
         )
     }
 
+    handleClickSendEmail = () => {
+        this.emailInput.disabled = true
+    }
+
     render() {
         const { redirect } = this.state
         if (redirect)
@@ -45,7 +50,8 @@ class SignUp extends Component {
                 <div className="row">
                     <h5 className="ui header">Email address</h5>
                     <div className="ui input small fluid">
-                        <input type="email" name="email" placeholder="Enter email" value={this.state.email} onChange={this.handleChange} />
+                        <input type="email" name="email" placeholder="Enter email" value={this.state.email} onChange={this.handleChange} ref={input => this.emailInput = input} />
+                        <button type="button" className="ui button mini" onClick={this.handleClickSendEmail}>인증메일 전송</button>
                     </div>
                 </div>
                 <br/>

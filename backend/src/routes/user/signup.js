@@ -5,6 +5,10 @@ const signup = async (db, email, password, name, callback) => {
     let message = ''
     let data = null
 
+    const getRandomNumber = () => {
+        return parseInt(Math.random() * 1000000, 10)
+    }
+
     try {
         const user = new db.UserModel({ email, password, name })
         const results = await user.save()
@@ -20,7 +24,7 @@ const signup = async (db, email, password, name, callback) => {
         }
     } catch (err) {
         error = true
-        message = 'signup 함수 에러 발생'
+        message = err.message
     }
 
     callback(getResJSON(error, message, data))

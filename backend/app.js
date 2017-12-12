@@ -15,7 +15,11 @@ const server = require('http').createServer(app)
 
 app.set('port', process.env.PORT || config.port)
 
-app.use('/', express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '/public')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+});
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))

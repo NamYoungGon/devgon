@@ -14,8 +14,11 @@
     "merge-descriptors": "latest",
     "mongodb": "latest",
     "mongoose": "latest",
+    "mongoose-auto-increment": "^5.0.1",
+    "nodemailer": "^4.4.1",
     "path": "^0.12.7",
     "socket.io": "latest",
+    "validator": "^9.2.0",
     "webpack": "^3.10.0"
   },
   "engines": {
