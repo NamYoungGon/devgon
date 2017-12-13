@@ -2,12 +2,20 @@ let socket = null,
     isLogined = false
 
 function login(user) {
-    const { email, name, no } = user
-    
+    const {
+        email,
+        name,
+        no
+    } = user
+
     socket = window.socket
 
     if (socket) {
-        emit('login', { email, name, no })
+        emit('login', {
+            email,
+            name,
+            no
+        })
 
         isLogined = true
     }
@@ -38,31 +46,34 @@ function getIsLogined() {
     return isLogined
 }
 
-function doNotify (msg) {
+function doNotify(msg) {
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {
         alert("This browser does not support desktop notification");
     }
-  
+
     // Let's check whether notification permissions have already been granted
     else if (Notification.permission === "granted") {
         // If it's okay let's create a notification
-        new Notification(msg);
+        var notification = new Notification(msg);
     }
-  
+
     // Otherwise, we need to ask the user for permission
-    else if (Notification.permission !== "denied") {
+    else if (Notification.permission !== 'denied') {
         Notification.requestPermission(function (permission) {
-        // If the user accepts, let's create a notification
+            // If the user accepts, let's create a notification
             if (permission === "granted") {
-                new Notification(msg);
+                var notification = new Notification(msg);
             }
         });
     }
-  
+
     // At last, if the user has denied notifications, and you 
     // want to be respectful there is no need to bother them any more.
 }
+Notification.requestPermission().then(function (result) {
+    // console.log(result);
+});
 
 const socketObj = {
     on,
