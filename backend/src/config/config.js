@@ -10,7 +10,7 @@ const config = {
         html: '인증번호 입니다. %d'
     },
     db: {
-        url: 'mongodb://admin:skadudrhs@ds123896.mlab.com:23896/devgon',
+        url: 'mongodb://admin:password@ds123896.mlab.com:23896/devgon',
         schemas: [
             {
                 file: './user_schema', 

@@ -17,7 +17,9 @@ Schema.createSchema = function (mongoose, autoIncrement) {
         hashed_password: { type: String, required: true, default: '' },
         salt: { type: String, required: true },
         created_at: { type: Date, index: { unique: false }, default: Date.now() },
-        updated_at: { type: Date, index: { unique: false }, default: Date.now() }
+        updated_at: { type: Date, index: { unique: false }, default: Date.now() },
+        is_deleted: { type: Boolean, default: false },
+        deleted_at: { type: Boolean, default: false, default: Date.now() }
     })
 
     UserSchema.plugin(autoIncrement.plugin, { 

@@ -4,7 +4,8 @@ module.exports = {
 
   // define output point
   output: {
-    path: __dirname + '/dist',
+    // path: __dirname + '/dist',
+    path: __dirname,
     filename: 'web.js'
   },
   target: 'node'
