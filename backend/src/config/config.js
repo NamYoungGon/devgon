@@ -4,22 +4,22 @@ const config = {
         service: 'gmail',
         auth: {
             user: 'nyg4628@gmail.com',
-            pass: ''
+            pass: 'password'
         },
-        subject: 'devgon 인증 메일입니다.',
+        subject: '회원가입 인증 메일입니다.',
         html: '인증번호 입니다. %d'
     },
     db: {
         url: 'mongodb://admin:password@ds123896.mlab.com:23896/devgon',
         schemas: [
             {
-                file: './user_schema', 
+                file: './schema/user', 
                 collection: 'users', 
                 schemaName: 'UserSchema',
                 modelName: 'UserModel',
             },
             {
-                file: './message_schema', 
+                file: './schema/message', 
                 collection: 'messages', 
                 schemaName: 'MessageSchema',
                 modelName: 'MessageModel'
