@@ -13,8 +13,8 @@ const getMessagesByRecepient = async (recepient, callback) => {
         if (results) {
             data = { messages: [] }
 
-            Array.from(results).forEach(aMessage => {
-                data.messages.push(aMessage)
+            results.forEach(aMessage => {
+                data.messages[aMessage.no] = aMessage
             })
         } else {
             message = '조회된 메시지가 없습니다.'
