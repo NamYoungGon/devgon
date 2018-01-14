@@ -68,5 +68,4 @@ Schema.createSchema = function (mongoose, autoIncrement) {
 
 }
 
-
 module.exports = Schema

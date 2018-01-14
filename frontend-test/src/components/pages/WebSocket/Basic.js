@@ -21,8 +21,6 @@ class Basic extends Component {
     componentDidMount() {
         getMessagesByRecepient('basic').then((res) => {
             const { messages } = res.data
-            console.log(res)
-            debugger
 
             this.setState({ messages })
 
